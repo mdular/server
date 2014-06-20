@@ -1,4 +1,11 @@
-class mdular_com inherits role_webserver {
+class mdular_com (
+    $users,
+    #$groups
+  ) inherits role_webserver {
+
+  # users
+  create_resources(user, $users)
+  #create_resources(group, $groups)
 
   # create dirs, prepare deployment
 

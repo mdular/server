@@ -4,9 +4,9 @@ class component_mdular_base {
     content => "banana\n"
   }
 
-  # ssh user
-
   # user, groups
+
+  # ssh user
 
   # firewall
   class { 'component_mdular_firewall': }
