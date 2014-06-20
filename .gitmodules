@@ -1,0 +1,21 @@
+[submodule "puppet/vendor/puppet-php"]
+	path = puppet/vendor/puppet-php
+	url = https://github.com/example42/puppet-php.git
+[submodule "puppet/vendor/puppet-nginx"]
+	path = puppet/vendor/puppet-nginx
+	url = https://github.com/jfryman/puppet-nginx.git
+[submodule "puppet/vendor/puppetlabs-apt"]
+	path = puppet/vendor/puppetlabs-apt
+	url = https://github.com/puppetlabs/puppetlabs-apt.git
+[submodule "puppet/vendor/puppetlabs-firewall"]
+	path = puppet/vendor/puppetlabs-firewall
+	url = https://github.com/puppetlabs/puppetlabs-firewall.git
+[submodule "puppet/vendor/puppetlabs-mysql"]
+	path = puppet/vendor/puppetlabs-mysql
+	url = https://github.com/puppetlabs/puppetlabs-mysql.git
+[submodule "puppet/vendor/puppetlabs-ntp"]
+	path = puppet/vendor/puppetlabs-ntp
+	url = https://github.com/puppetlabs/puppetlabs-ntp.git
+[submodule "puppet/vendor/puppetlabs-stdlib"]
+	path = puppet/vendor/puppetlabs-stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
