@@ -9,4 +9,4 @@ sudo apt-get dist-upgrade
 
 # run puppet apply:
 
-sudo puppet apply /vagrant/puppet/manifests/ --config /vagrant/puppet/puppet.conf --modulepath=/vagrant/puppet/vendor:/vagrant/puppet/components
+sudo puppet apply /vagrant/puppet/manifests/ --confdir=/vagrant/puppet

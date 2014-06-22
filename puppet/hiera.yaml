@@ -1,6 +1,11 @@
-:backends: yaml
+:backends: 
+  - yaml
+  - json
 :yaml:
   :datadir: "%{settings::manifestdir}/../../hiera"
+  #:datadir: "%{settings::confdir}/../hiera"
+  #:datadir: "../hiera"
 :hierarchy:
- - users
+  - "%{osfamily}"
+  - common
 :logger: console

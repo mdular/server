@@ -1,0 +1,4 @@
+---
+sshServicename: ssh
+sshPackages:
+  - 'openssh-server'

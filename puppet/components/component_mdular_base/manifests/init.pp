@@ -1,12 +1,18 @@
-class component_mdular_base {
+class component_mdular_base (
+    $users = [],
+    $groups = []
+  ) {
 
 	file { '/etc/motd':
     content => "banana\n"
   }
 
-  # user, groups
+  # users, groups
+  create_resources(user, $users)
+  create_resources(group, $groups)
 
-  # ssh user
+  # ssh
+  class { 'component_mdular_base::ssh': }
 
   # firewall
   class { 'component_mdular_firewall': }

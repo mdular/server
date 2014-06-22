@@ -1,0 +1,23 @@
+---
+mdular_com::users:
+  user1:
+    ensure: present
+    home: /home/user1
+    managehome: true
+    shell: /bin/bash
+    uid: 10001
+    #gid: 10001
+    #groups:
+    password: 123
+
+mdular_com::groups:
+#  dev:
+#    ensure: present
+#    gid: 401
+
+permitRootLogin: 'yes'
+homepath: /home
+publicKeys:
+  user1: 
+    type: 'ssh-rsa'
+    key: 'public key string without spaces'

@@ -1,5 +1,7 @@
 class role_base {
 
+  class { 'component_mdular_base': }
+
   class { 'component_mdular_base::packages': 
     installed_packages => [
       'curl',
@@ -11,17 +13,4 @@ class role_base {
       #'iotop'
     #]
   }
-
-  # ntp
-
-  # user, groups
-
-  # ssh user
-
-  # firewall
-  class { 'component_mdular_firewall': }
-
-  # git
-
-  # htop
 }

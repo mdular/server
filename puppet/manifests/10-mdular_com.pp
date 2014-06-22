@@ -1,9 +1,10 @@
 class mdular_com (
-    $users,
-    #$groups
+    $users, #hiera("mdular_com::users")
+    #$groups #hiera("mdular_com::groups")
   ) inherits role_webserver {
 
-  # users
+  
+  # users, groups
   create_resources(user, $users)
   #create_resources(group, $groups)
 
