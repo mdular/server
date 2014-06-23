@@ -21,3 +21,6 @@ publicKeys:
   user1: 
     type: 'ssh-rsa'
     key: 'public key string without spaces'
+
+mdular_com::sudoers:
+  - user1

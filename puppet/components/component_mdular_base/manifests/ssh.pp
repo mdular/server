@@ -3,16 +3,16 @@ define public_key ($key, $type) {
   $homepath = hiera("homepath")
 
   # ensure home directory
-  file { "/${homepath}/${title}": 
+  file { "${homepath}/${title}": 
     ensure  => directory,
     owner   => $title,
     group   => $title,
     mode    => '0750',
-    require => [ User[$title], Group[$title] ],
+    require => [ User[$title] ],
   }
 
   # ensure .ssh directory
-  file { "/${homepath}/${title}/.ssh": 
+  file { "${homepath}/${title}/.ssh": 
     ensure  => directory,
     owner   => $title,
     group   => $title,
