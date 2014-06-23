@@ -1,6 +1,6 @@
 class component_mdular_base (
-    $users = [],
-    $groups = []
+    $users = {},
+    $groups = {}
   ) {
 
 	file { '/etc/motd':
