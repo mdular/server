@@ -1,4 +1,12 @@
 ---
+
+# TODO: component mdular_base should use these automatically
+mdular_base::users:
+mdular_base::groups:
+mdular_base::sshUsers:
+mdular_base::sudoers:
+
+# TODO: mdular_com should use these automatically
 mdular_com::users:
   user1:
     ensure: present
@@ -8,7 +16,10 @@ mdular_com::users:
     uid: 10001
     #gid: 10001
     #groups:
-    password: 123
+    password: $6$/vcHKi.6$Iq4RoRnxocHdtHN1ypo8.0YtfNLRylY9.o9O/i221zSM8JXl8YsC5wzjOucPbORRX/pdAKu.6ZGUGsLf8gJlX.
+              # = 123
+              # mkpasswd -m sha-512 123
+    purge_ssh_keys: true
 
 mdular_com::groups:
 #  dev:
@@ -17,7 +28,7 @@ mdular_com::groups:
 
 permitRootLogin: 'yes'
 homepath: /home
-publicKeys:
+mdular_com::sshUsers:
   user1: 
     type: 'ssh-rsa'
     key: 'public key string without spaces'

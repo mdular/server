@@ -7,7 +7,7 @@ define public_key ($key, $type) {
     ensure  => directory,
     owner   => $title,
     group   => $title,
-    mode    => '0750',
+    mode    => '0755',
     require => [ User[$title] ],
   }
 
@@ -34,7 +34,7 @@ class component_mdular_base::ssh (
     $serviceName = hiera("sshServicename"),
     $permitRootLogin = hiera("permitRootLogin"),
     $packages = hiera("sshPackages"),
-    $publicKeys = hiera("publicKeys")
+    $publicKeys = hiera("mdular_com::sshUsers")
   ) {
 
   package { $packages:
