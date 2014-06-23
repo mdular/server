@@ -1,4 +1,6 @@
 ---
+permitRootLogin: 'yes'
+homepath: /home
 
 # TODO: component mdular_base should use these automatically
 mdular_base::users:
@@ -26,8 +28,6 @@ mdular_com::groups:
 #    ensure: present
 #    gid: 401
 
-permitRootLogin: 'yes'
-homepath: /home
 mdular_com::sshUsers:
   user1: 
     type: 'ssh-rsa'
