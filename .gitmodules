@@ -1,21 +1,24 @@
-[submodule "puppet/vendor/puppet-php"]
-	path = puppet/vendor/puppet-php
+[submodule "puppet/vendor/php"]
+	path = puppet/vendor/php
 	url = https://github.com/example42/puppet-php.git
-[submodule "puppet/vendor/puppet-nginx"]
-	path = puppet/vendor/puppet-nginx
+[submodule "puppet/vendor/nginx"]
+	path = puppet/vendor/nginx
 	url = https://github.com/jfryman/puppet-nginx.git
-[submodule "puppet/vendor/puppetlabs-apt"]
-	path = puppet/vendor/puppetlabs-apt
+[submodule "puppet/vendor/apt"]
+	path = puppet/vendor/apt
 	url = https://github.com/puppetlabs/puppetlabs-apt.git
-[submodule "puppet/vendor/puppetlabs-firewall"]
-	path = puppet/vendor/puppetlabs-firewall
+[submodule "puppet/vendor/firewall"]
+	path = puppet/vendor/firewall
 	url = https://github.com/puppetlabs/puppetlabs-firewall.git
-[submodule "puppet/vendor/puppetlabs-mysql"]
-	path = puppet/vendor/puppetlabs-mysql
+[submodule "puppet/vendor/mysql"]
+	path = puppet/vendor/mysql
 	url = https://github.com/puppetlabs/puppetlabs-mysql.git
-[submodule "puppet/vendor/puppetlabs-ntp"]
-	path = puppet/vendor/puppetlabs-ntp
+[submodule "puppet/vendor/ntp"]
+	path = puppet/vendor/ntp
 	url = https://github.com/puppetlabs/puppetlabs-ntp.git
-[submodule "puppet/vendor/puppetlabs-stdlib"]
-	path = puppet/vendor/puppetlabs-stdlib
+[submodule "puppet/vendor/stdlib"]
+	path = puppet/vendor/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "puppet/vendor/concat"]
+	path = puppet/vendor/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
