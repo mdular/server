@@ -9,8 +9,8 @@ class role_base {
       'htop',
       'iotop',
     ],
-    #purged_packages => [
-      #'iotop'
-    #]
+    purged_packages => [
+      'apache2'
+    ]
   }
 }

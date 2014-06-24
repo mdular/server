@@ -16,19 +16,19 @@ class role_webserver inherits role_base {
 
   file { "/var/www":
     ensure => directory,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0755',
   }
-
-  # php php-fpm component
-  class { 'component_mdular_php': }
-  # .sock configuration
 
   # nginx component
-  class { 'component_mdular_nginx': }
+  class { 'component_mdular_nginx': } ->
 
-  nginx::resource::vhost { 'www.puppetlabs.com':
-    www_root => '/var/www/www.puppetlabs.com',
-    ensure => absent
+  # php php-fpm component
+  class { 'component_mdular_php':
+    #require => Service["nginx"]
   }
+  # .sock configuration
 
   # mysql-server component
   class { 'component_mdular_mysql': }

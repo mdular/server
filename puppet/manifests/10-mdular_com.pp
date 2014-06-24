@@ -12,6 +12,9 @@ class mdular_com (
   file { "/var/www/mdular.com":
     ensure => directory,
     require => File["/var/www"],
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0755',
   }
 
   # host configuration
@@ -20,7 +23,7 @@ class mdular_com (
   # routes *.php to php-fpm -> index.php
   # error pages
   # url rewrite
-  $full_web_path = '/var/www'
+  $full_web_path = "/var/www"
 
   define web::nginx_host (
       $backend_port         = 9000,
@@ -31,7 +34,7 @@ class mdular_com (
     ) {
     nginx::resource::vhost { "${name}":
       ensure              => present,
-      www_root            => "${full_web_path}/${name}/",
+      www_root            => "${www_root}",
       #location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
     }
 
@@ -60,11 +63,12 @@ class mdular_com (
         #ssl_only        => true,
         #vhost           => "${name}.${::domain} ${name}",
         vhost           => "${name}",
-        www_root        => "${full_web_path}/${name}/",
+        www_root        => "${www_root}",
         location        => '~ \.php$',
         index_files     => ['index.php', 'index.html', 'index.htm'],
         proxy           => undef,
-        fastcgi         => "127.0.0.1:${backend_port}",
+        #fastcgi         => "127.0.0.1:${backend_port}",
+        fastcgi         => "unix:/var/run/php5-fpm.sock",
         fastcgi_script  => undef,
         location_cfg_append => {
           fastcgi_connect_timeout => '3m',
@@ -75,7 +79,9 @@ class mdular_com (
     }
   }
 
-  web::nginx_host { 'mdular.com': }
+  web::nginx_host { 'mdular.com': 
+    www_root => "${full_web_path}/mdular.com/"
+  }
   #  require => Class['nginx']
   #}
     #backend_port => 9001,
