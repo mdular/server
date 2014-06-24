@@ -1,4 +1,5 @@
 class component_mdular_base (
+    # TODO: use hiera config
     $users = {},
     $groups = {}
   ) {
@@ -20,9 +21,5 @@ class component_mdular_base (
   # firewall
   class { 'component_mdular_firewall': }
 
-  # git
-
-  # htop
-
-  # ntp
+  # TODO: ntp
 }
