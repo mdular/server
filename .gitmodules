@@ -22,3 +22,6 @@
 [submodule "puppet/vendor/concat"]
 	path = puppet/vendor/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat.git
+[submodule "puppet/vendor/puppi"]
+	path = puppet/vendor/puppi
+	url = https://github.com/example42/puppi.git
