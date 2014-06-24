@@ -14,12 +14,21 @@ class role_webserver inherits role_base {
     action  => accept
   }
 
-  # nginx component
-  class { 'component_mdular_nginx': }
+  file { "/var/www":
+    ensure => directory,
+  }
 
   # php php-fpm component
   class { 'component_mdular_php': }
   # .sock configuration
+
+  # nginx component
+  class { 'component_mdular_nginx': }
+
+  nginx::resource::vhost { 'www.puppetlabs.com':
+    www_root => '/var/www/www.puppetlabs.com',
+    ensure => absent
+  }
 
   # mysql-server component
   class { 'component_mdular_mysql': }
