@@ -35,6 +35,7 @@ class mdular_com (
     nginx::resource::vhost { "${name}":
       ensure              => present,
       www_root            => "${www_root}",
+      rewrite_www_to_non_www  => true,
       #location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
     }
 
