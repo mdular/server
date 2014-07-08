@@ -1,7 +1,10 @@
 # declare component
 class component_mdular_firewall {
 
-	# initialize the firewall module
+	# ensure iptables-persistens package
+	package { 'iptables-persistent':
+		ensure => latest,
+	} ->
 
 	# purge to ensure only rules managed by puppet
 	resources {'firewall':
