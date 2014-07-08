@@ -1,6 +1,7 @@
 class mdular_com (
     $users = {}, #hiera("mdular_com::users")
-    $groups = {} #hiera("mdular_com::groups")
+    $groups = {}, #hiera("mdular_com::groups")
+    $mysql = {} #hiera("mdular_com::mysql")
   ) inherits role_webserver {
 
   
@@ -89,11 +90,9 @@ class mdular_com (
   }
 
   # mysql db, user, grant
-  $mysqlConfig = hiera("mdular_com::mysql")
-
-  create_resources(mysql_database, $mysqlConfig[databases])
-  create_resources(mysql_user, $mysqlConfig[users])
-  create_resources(mysql_grant, $mysqlConfig[grants])
+  create_resources(mysql_database, $mysql[databases])
+  create_resources(mysql_user, $mysql[users])
+  create_resources(mysql_grant, $mysql[grants])
 }
 
 # TODO: node declaration
