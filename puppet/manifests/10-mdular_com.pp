@@ -85,7 +85,7 @@ class mdular_com (
   }
 
   web::nginx_host { 'mdular.com': 
-    www_root => "${full_web_path}/mdular.com/"
+    www_root => "${full_web_path}/mdular.com/public"
     #backend_port => 9001,
   }
 
