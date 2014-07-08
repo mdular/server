@@ -22,13 +22,10 @@ class role_webserver inherits role_base {
   }
 
   # nginx component
-  class { 'component_mdular_nginx': } ->
+  class { 'component_mdular_nginx': }
 
   # php php-fpm component
-  class { 'component_mdular_php':
-    #require => Service["nginx"]
-  }
-  # .sock configuration
+  class { 'component_mdular_php': }
 
   # mysql-server component
   class { 'component_mdular_mysql': }
