@@ -14,5 +14,9 @@ sudo puppet apply /vagrant/puppet/manifests/ --confdir=/vagrant/puppet
 hiera -c /vagrant/puppet/hiera.yaml mdular_com::users settings::manifestdir=/vagrant/puppet/manifests
 
 # update git submodules
+git submodule foreach git checkout origin master
+git submodule foreach git fetch origin master
+git submodule foreach git pull origin master
+
 git pull --recurse-submodules
 git submodule update --recursive
