@@ -1,12 +1,12 @@
 class mdular_com (
-    $users, #hiera("mdular_com::users")
-    #$groups #hiera("mdular_com::groups")
+    $users = {}, #hiera("mdular_com::users")
+    $groups = {} #hiera("mdular_com::groups")
   ) inherits role_webserver {
 
   
   # users, groups
   create_resources(user, $users)
-  #create_resources(group, $groups)
+  create_resources(group, $groups)
 
   # create dirs, prepare deployment
   file { "/var/www/mdular.com":
@@ -17,12 +17,14 @@ class mdular_com (
     mode   => '0755',
   }
 
-  # host configuration
+  # TODO: proper host configuration
   # configuration for mdular.com on port 80
-  # serves static files
+  # serves static files properly
+  # gzip, mime-types (also for served fonts)
   # routes *.php to php-fpm -> index.php
   # error pages
   # url rewrite
+  # .sock configuration
   $full_web_path = "/var/www"
 
   define web::nginx_host (
@@ -45,6 +47,7 @@ class mdular_com (
       $tmp_www_root = $www_root
     }
 
+    # ssl
     #nginx::resource::vhost { "${name}.${::domain} ${name}":
     #  ensure                => present,
     #  listen_port           => 443,
@@ -82,13 +85,15 @@ class mdular_com (
 
   web::nginx_host { 'mdular.com': 
     www_root => "${full_web_path}/mdular.com/"
-  }
-  #  require => Class['nginx']
-  #}
     #backend_port => 9001,
-  #}
+  }
 
-  # mysql db, user
+  # mysql db, user, grant
+  $mysqlConfig = hiera("mdular_com::mysql")
+
+  create_resources(mysql_database, $mysqlConfig[databases])
+  create_resources(mysql_user, $mysqlConfig[users])
+  create_resources(mysql_grant, $mysqlConfig[grants])
 }
 
 # TODO: node declaration

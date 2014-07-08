@@ -7,6 +7,8 @@ mdular_base::users:
 mdular_base::groups:
 mdular_base::sshUsers:
 mdular_base::sudoers:
+mdular_base::mysql:
+  rootPassword: 'root'
 
 # TODO: mdular_com should use these automatically
 mdular_com::users:
@@ -35,3 +37,25 @@ mdular_com::sshUsers:
 
 mdular_com::sudoers:
   - user1
+
+mdular_com::mysql:
+  databases:
+    mdular_live:
+      ensure: present
+      charset: 'utf8'
+      collate: 'utf8_general_ci'
+  users:
+    user1@localhost:
+      ensure: present
+      password_hash: '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257'
+      # 123
+      # select password('123')
+      # why no work?? echo -n 123 | sha1sum | awk '{print toupper($1)}'
+      # add * in front
+  grants:
+    user1@localhost/user1.*:
+      ensure: present
+      options: ['GRANT']
+      privileges: ['ALL']
+      table: 'user1.*'
+      user: 'user1@localhost'
