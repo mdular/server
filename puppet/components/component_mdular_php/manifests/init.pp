@@ -1,7 +1,7 @@
 # initialize the php module
 class component_mdular_php {
 
-  package { ["php5-cli", "php5-cgi"]:
+  package { ["php5-cli", "php5-cgi", "php-pear"]:
     ensure => installed,
   } ->
 
@@ -13,5 +13,5 @@ class component_mdular_php {
     service => 'nginx'
   }
 
-  php::module { ["fpm"]: }
+  php::module { ["fpm", "mysql"]: }
 }
