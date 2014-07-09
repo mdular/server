@@ -40,13 +40,16 @@ class mdular_com (
       www_root            => "${www_root}",
       rewrite_www_to_non_www  => true,
       #location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
+      gzip_types    => 'text/plain text/xml application/xml text/css application/x-javascript',
+      try_files     => ['$uri $uri/ /index.php?$args'],
+      index_files   => ['index.php'],
     }
 
-    if !$www_root {
-      $tmp_www_root = undef
-    } else {
-      $tmp_www_root = $www_root
-    }
+    #if !$www_root {
+    #  $tmp_www_root = undef
+    #} else {
+    #  $tmp_www_root = $www_root
+    #}
 
     # ssl
     #nginx::resource::vhost { "${name}.${::domain} ${name}":
@@ -61,6 +64,14 @@ class mdular_com (
     #  ssl_key               => 'puppet:///modules/sslkey/wildcard_mydomain.key',
     #}
 
+    nginx::resource::location { "${name}_htaccess":
+      ensure  => present,
+      vhost => "${name}",
+      location  => "~ /\\.ht",
+      location_deny => ['all'],
+      location_custom_cfg => {}
+    }
+
     if $php {
       nginx::resource::location { "${name}_root":
         ensure          => present,
@@ -70,7 +81,7 @@ class mdular_com (
         vhost           => "${name}",
         www_root        => "${www_root}",
         location        => '~ \.php$',
-        index_files     => ['index.php', 'index.html', 'index.htm'],
+        index_files     => ['index.php'],
         proxy           => undef,
         #fastcgi         => "127.0.0.1:${backend_port}",
         fastcgi         => "unix:/var/run/php5-fpm.sock",
