@@ -40,7 +40,7 @@ class mdular_com (
       www_root            => "${www_root}",
       rewrite_www_to_non_www  => true,
       #location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
-      gzip_types    => 'text/plain text/xml application/xml text/css application/x-javascript',
+      gzip_types    => 'text/plain text/xml application/xml text/css application/x-javascript application/javascript',
       try_files     => ['$uri $uri/ /index.php?$args'],
       index_files   => ['index.php'],
     }
