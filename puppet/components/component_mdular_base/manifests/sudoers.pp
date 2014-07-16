@@ -5,7 +5,8 @@ define sudoer () {
     owner   => 'root',
     group   => 'root',
     mode    => '0440',
-    content => "${title} ALL=NOPASSWD:ALL",
+    #content => "${title} ALL=NOPASSWD:ALL",
+    content => "${title} ALL=(ALL) NOPASSWD:ALL",
   }
 }
 
