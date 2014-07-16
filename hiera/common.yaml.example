@@ -36,7 +36,7 @@ mdular_com::sshUsers:
     key: 'public key string without spaces'
 
 mdular_com::sudoers:
-  - user1
+  user1: {}
 
 mdular_com::mysql:
   databases:
