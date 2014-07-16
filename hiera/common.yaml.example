@@ -10,7 +10,6 @@ mdular_base::sudoers:
 mdular_base::mysql:
   rootPassword: 'root'
 
-# TODO: mdular_com should use these automatically
 mdular_com::users:
   user1:
     ensure: present
