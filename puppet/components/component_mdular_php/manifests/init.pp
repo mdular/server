@@ -2,7 +2,7 @@
 class component_mdular_php {
 
   # ensure dependencies for installation without apache
-  package { ["php5-cli", "php5-cgi", "php-pear"]:
+  package { ["php5-cli", "php5-cgi", "php-pear", "php5-fpm"]:
     ensure => installed,
   } ->
 
@@ -13,15 +13,25 @@ class component_mdular_php {
 
   # initialize example42 php module
   class { 'php':
-    service => 'nginx',
-    #version => '5.4.4', # TODO: doesn't work?
+    service => 'php5-fpm',
+    # version => '5.4.4-14+deb7u12', # TODO: make os detected variable
+  }
+
+  # declare php5-fpm service
+  service { 'php5-fpm': 
+    enable  => true,
+    ensure  => running,
   }
 
   # additional php modules
-  php::module { ["fpm", "mysql"]: }
+  php::module { ["mysql"]: }
+
+  php::module { ["apc"]:
+    module_prefix => 'php-',
+  }
 
   # install composer
   class { 'composer':
-    auto_update => true
+    #auto_update => true
   }
 }
