@@ -11,7 +11,7 @@ define web::nginx_host (
     $backend_port         = 9000,
     $php                  = true,
     $proxy                = undef,
-    $www_root             = "${full_web_path}/${name}/",
+    $www_root             = "/var/www/${name}/",
     $location_cfg_append  = undef,
   ) {
   nginx::resource::vhost { "${name}":
