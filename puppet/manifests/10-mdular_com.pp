@@ -21,13 +21,13 @@ class mdular_com (
   # htaccess
   # TODO: make this nice and use hiera users
   # move into host creation by parameter / hiera flag
-  file { "/etc/nginx/mdular_com.htpasswd":
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('component_mdular_base/htpasswd/htpasswd.erb'),
+  #file { "/etc/nginx/mdular_com.htpasswd":
+  #  owner   => 'root',
+  #  group   => 'root',
+  #  mode    => '0644',
+  #  content => template('component_mdular_base/htpasswd/htpasswd.erb'),
     #notify  => Service[$serviceName],
-  }
+  #}
 
   # create host
   web::nginx_host { 'mdular.com': 

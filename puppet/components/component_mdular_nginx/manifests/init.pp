@@ -22,9 +22,9 @@ define web::nginx_host (
     gzip_types    => 'text/plain text/xml application/xml text/css application/x-javascript application/javascript',
     try_files     => ['$uri $uri/ /index.php?$args'],
     index_files   => ['index.php'],
-    auth_basic    => 'Restricted',
+    #auth_basic    => 'Restricted',
     # TODO: create resource properly for each host
-    auth_basic_user_file => '/etc/nginx/mdular_com.htpasswd'
+    #auth_basic_user_file => '/etc/nginx/mdular_com.htpasswd'
   }
 
   #if !$www_root {
