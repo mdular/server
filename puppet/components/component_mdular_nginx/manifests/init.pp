@@ -14,6 +14,27 @@ define web::nginx_host (
     $www_root             = "/var/www/${name}/",
     $location_cfg_append  = undef,
   ) {
+
+  # create directory
+  file { "${www_root}":
+    ensure => directory,
+    require => File["/var/www"],
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0755',
+  }
+
+  # htaccess
+  # TODO: make this nice and use hiera users
+  # enable by parameter / hiera flag
+  #file { "/etc/nginx/mdular_com.htpasswd":
+  #  owner   => 'root',
+  #  group   => 'root',
+  #  mode    => '0644',
+  #  content => template('component_mdular_base/htpasswd/htpasswd.erb'),
+    #notify  => Service[$serviceName],
+  #}
+
   nginx::resource::vhost { "${name}":
     ensure              => present,
     www_root            => "${www_root}",
