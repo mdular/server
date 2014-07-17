@@ -24,7 +24,7 @@ class component_mdular_php {
   }
 
   # additional php modules
-  php::module { ["mysql"]: }
+  php::module { ["mysql", "gd"]: }
 
   php::module { ["apc"]:
     module_prefix => 'php-',
