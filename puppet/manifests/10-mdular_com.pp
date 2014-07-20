@@ -1,11 +1,11 @@
-# TOOD: create hosts automatically from hiera
+# TOOD: use node configuration and create environemnts as resources from hiera
 
 class mdular_com (
     $users = {}, #hiera("mdular_com::users")
     $groups = {}, #hiera("mdular_com::groups")
-    $mysql = {} #hiera("mdular_com::mysql")
+    $mysql = {}, #hiera("mdular_com::mysql")
+    $htpasswd = {} #hiera("mdular_com::htpasswd")
   ) inherits role_webserver {
-
   
   # users, groups
   create_resources(user, $users)
@@ -13,7 +13,8 @@ class mdular_com (
 
   # create host
   web::nginx_host { 'mdular.com': 
-    www_root => "/var/www/mdular.com/public"
+    www_root => "/var/www/mdular.com/public",
+    #htpasswd => true,
     #backend_port => 9001,
   }
 
@@ -23,5 +24,5 @@ class mdular_com (
   create_resources(mysql_grant, $mysql[grants])
 }
 
-# TODO: node declaration
+# include mdular_com in puppet run
 class { 'mdular_com': }
