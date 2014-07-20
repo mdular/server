@@ -14,6 +14,7 @@ class mdular_com (
   # create host
   web::nginx_host { 'mdular.com': 
     www_root => "/var/www/mdular.com/public",
+    listen_options => "default_server",
     #htpasswd => true,
     #backend_port => 9001,
   }

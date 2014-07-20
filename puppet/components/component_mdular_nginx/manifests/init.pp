@@ -9,6 +9,7 @@
 # url rewrite
 # .sock configuration
 define web::nginx_host (
+    $listen_options       = undef,
     $backend_port         = 9000,
     $php                  = true,
     $proxy                = undef,
@@ -48,6 +49,7 @@ define web::nginx_host (
 
   nginx::resource::vhost { "${name}":
     ensure              => present,
+    listen_options      => $listen_options,
     www_root            => "${www_root}",
     rewrite_www_to_non_www  => true,
     #location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
