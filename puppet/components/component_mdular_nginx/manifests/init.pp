@@ -1,7 +1,8 @@
 # define host creation
+#
 # TODO: proper host configuration
 # configuration for mdular.com on port 80
-# serves static files properly
+# serve static files properly
 # gzip, mime-types (also for served fonts)
 # routes *.php to php-fpm -> index.php
 # error pages
@@ -13,10 +14,11 @@ define web::nginx_host (
     $proxy                = undef,
     $www_root             = "/var/www/${name}/",
     $location_cfg_append  = undef,
+    $htpasswd             = false,
   ) {
 
   # create directory
-  file { "${www_root}":
+  file { "/var/www/${name}":
     ensure => directory,
     require => File["/var/www"],
     owner  => 'www-data',
@@ -26,14 +28,23 @@ define web::nginx_host (
 
   # htaccess
   # TODO: make this nice and use hiera users
-  # enable by parameter / hiera flag
-  #file { "/etc/nginx/mdular_com.htpasswd":
-  #  owner   => 'root',
-  #  group   => 'root',
-  #  mode    => '0644',
-  #  content => template('component_mdular_base/htpasswd/htpasswd.erb'),
-    #notify  => Service[$serviceName],
-  #}
+  # TODO: create resource properly for each host
+  if $htpasswd {
+    file { "/etc/nginx/mdular_com.htpasswd":
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('component_mdular_base/htpasswd/htpasswd.erb'),
+      notify  => Service['nginx'],
+    }
+
+    $auth_basic = 'Restricted'
+    $auth_basic_user_file = '/etc/nginx/mdular_com.htpasswd'
+  } else {
+    $auth_basic           = undef
+    $auth_basic_user_file = undef
+  }
 
   nginx::resource::vhost { "${name}":
     ensure              => present,
@@ -43,9 +54,8 @@ define web::nginx_host (
     gzip_types    => 'text/plain text/xml application/xml text/css application/x-javascript application/javascript',
     try_files     => ['$uri $uri/ /index.php?$args'],
     index_files   => ['index.php'],
-    #auth_basic    => 'Restricted',
-    # TODO: create resource properly for each host
-    #auth_basic_user_file => '/etc/nginx/mdular_com.htpasswd'
+    auth_basic    => $auth_basic,
+    auth_basic_user_file => $auth_basic_user_file,
   }
 
   #if !$www_root {
