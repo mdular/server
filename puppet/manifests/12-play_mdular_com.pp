@@ -1,3 +1,5 @@
+# TODO: create environments as resources from hiera
+
 class play_mdular_com (
     $users = {}, #hiera("mdular_com::users")
     $groups = {}, #hiera("mdular_com::groups")
