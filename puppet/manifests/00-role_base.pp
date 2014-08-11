@@ -10,7 +10,7 @@ class role_base {
       'iotop',
     ],
     purged_packages => [
-      'apache2'
+      'apache2.2-common'
     ]
   }
 }
