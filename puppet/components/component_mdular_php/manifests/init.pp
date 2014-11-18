@@ -1,4 +1,4 @@
-# initialize the php module
+# initialise the php module
 class component_mdular_php {
 
   # ensure dependencies for installation without apache
@@ -7,18 +7,18 @@ class component_mdular_php {
   } ->
 
   # fix example42 php module trying to write apache2 php config
-  file { "/etc/php5/apache2": 
+  file { "/etc/php5/apache2":
     ensure => directory,
   } ->
 
-  # initialize example42 php module
+  # initialise example42 php module
   class { 'php':
     service => 'php5-fpm',
-    # version => '5.4.4-14+deb7u12', # TODO: make os detected variable
+    # version => '5.4.4-14+deb7u12', # TODO: get from hiera Debian.yaml
   }
 
   # declare php5-fpm service
-  service { 'php5-fpm': 
+  service { 'php5-fpm':
     enable  => true,
     ensure  => running,
   }
