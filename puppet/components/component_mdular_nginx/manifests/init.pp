@@ -16,6 +16,7 @@ define web::nginx_host (
     $www_root             = "/var/www/${name}/",
     $location_cfg_append  = undef,
     $htpasswd             = false,
+    $server_name          = ["${name}"],
   ) {
 
   # create directory
@@ -49,6 +50,7 @@ define web::nginx_host (
 
   nginx::resource::vhost { "${name}":
     ensure              => present,
+    server_name         => $server_name,
     listen_options      => $listen_options,
     www_root            => "${www_root}",
     rewrite_www_to_non_www  => true,
