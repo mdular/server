@@ -7,7 +7,7 @@ class wakeandcamp_de (
 
   # create host
   web::nginx_host { 'wakeandcamp.de':
-    www_root => "/var/www/wakeandcamp.de/public",
+    www_root => "/var/www/wakeandcamp.de/wordpress",
     server_name => ['wakeandcamp.mdular.com'],
   }
 
