@@ -1,21 +1,14 @@
-# TODO: create environments as resources from hiera
-
-class dev_mdular_com (
+class wakeandcamp_de (
     $users = {}, #hiera("mdular_com::users")
     $groups = {}, #hiera("mdular_com::groups")
     $mysql = {}, #hiera("mdular_com::mysql")
     $htpasswd = {} #hiera("mdular_com::htpasswd")
   ) inherits role_webserver {
 
-  # users, groups
-  create_resources(user, $users)
-  create_resources(group, $groups)
-
   # create host
-  web::nginx_host { 'dev.mdular.com':
-    www_root => "/var/www/dev.mdular.com/public",
-    htpasswd => true,
-    #backend_port => 9001,
+  web::nginx_host { 'wakeandcamp.de':
+    www_root => "/var/www/wakeandcamp.de/public",
+    server_name => ['wakeandcamp.mdular.com'],
   }
 
   # mysql db, user, grant
@@ -24,5 +17,5 @@ class dev_mdular_com (
   create_resources(mysql_grant, $mysql[grants])
 }
 
-# include dev_mdular_com in puppet run
-class { 'dev_mdular_com': }
+# include in puppet run
+class { 'wakeandcamp_de': }
