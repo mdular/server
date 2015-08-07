@@ -7,8 +7,8 @@ sudo apt-get upgrade
 sudo apt-get dist-upgrade
 
 # run puppet apply:
-sudo puppet apply /vagrant/puppet/manifests/ --confdir=/vagrant/puppet
-sudo puppet apply /var/server/puppet/manifests/ --confdir=/var/server/puppet
+sudo puppet apply /vagrant/puppet/manifests/ --confdir=/vagrant/puppet --show_diff
+sudo puppet apply /var/server/puppet/manifests/ --confdir=/var/server/puppet --show_diff
 
 # test hiera data 'mdular_com::users'
 hiera -c /vagrant/puppet/hiera.yaml mdular_com::users settings::manifestdir=/vagrant/puppet/manifests
