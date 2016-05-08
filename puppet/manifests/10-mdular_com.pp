@@ -6,15 +6,15 @@ class mdular_com (
     $mysql = {}, #hiera("mdular_com::mysql")
     $htpasswd = {} #hiera("mdular_com::htpasswd")
   ) inherits role_webserver {
-  
+
   # users, groups
   create_resources(user, $users)
   create_resources(group, $groups)
 
   # create host
-  web::nginx_host { 'mdular.com': 
+  web::nginx_host { 'mdular.com':
     www_root => "/var/www/mdular.com/public",
-    listen_options => "default_server",
+    # listen_options => "default_server",
     #htpasswd => true,
     #backend_port => 9001,
   }
