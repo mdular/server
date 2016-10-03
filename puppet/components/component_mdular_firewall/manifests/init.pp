@@ -18,7 +18,7 @@ class component_mdular_firewall {
 
 	# add ssh rule
 	firewall { '003 ssh':
-		port    => [22, 2222],
+		dport    => [22, 2222],
 		proto    => tcp,
 		action  => accept
 	}

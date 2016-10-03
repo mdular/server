@@ -3,13 +3,13 @@ class role_webserver inherits role_base {
   # firewall
   # rules
   firewall { '11 http':
-    port    => [80],
+    dport    => [80],
     proto   => tcp,
     action  => accept
   }
 
   firewall { '12 https':
-    port    => [443],
+    dport    => [443],
     proto   => tcp,
     action  => accept
   }

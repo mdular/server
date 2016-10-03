@@ -1,6 +1,7 @@
 # define host creation
 #
 # TODO: proper host configuration
+# reverse proxy for node, fpm pools
 # configuration for mdular.com on port 80
 # serve static files properly
 # gzip, mime-types (also for served fonts)
@@ -19,7 +20,7 @@ define web::nginx_host (
     $server_name          = ["${name}"],
   ) {
 
-  # create directory
+  # create www root directory
   file { "/var/www/${name}":
     ensure => directory,
     require => File["/var/www"],
@@ -103,11 +104,7 @@ define web::nginx_host (
       #fastcgi         => "127.0.0.1:${backend_port}",
       fastcgi         => "unix:/var/run/php5-fpm.sock",
       fastcgi_script  => undef,
-      location_cfg_append => {
-        fastcgi_connect_timeout => '3m',
-        fastcgi_read_timeout    => '3m',
-        fastcgi_send_timeout    => '3m'
-      }
+      location_cfg_append => $location_cfg_append
     }
   }
 }
@@ -115,6 +112,9 @@ define web::nginx_host (
 # initialize the nginx module
 class component_mdular_nginx {
 
-  class { 'nginx': }
+    class{'nginx':
+      manage_repo => true,
+      package_source => 'nginx-stable'
+    }
   # TODO: global configuration from template
 }

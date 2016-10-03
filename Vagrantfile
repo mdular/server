@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   #config.vm.box = "wheezy64-7.4"
-  config.vm.box = "http://puppet-vagrant-boxes.puppetlabs.com/debian-73-x64-virtualbox-puppet.box"
+  config.vm.box = "cargomedia/debian-7-amd64-default"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

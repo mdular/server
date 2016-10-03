@@ -6,14 +6,15 @@ class play_mdular_com (
     $mysql = {}, #hiera("mdular_com::mysql")
     $htpasswd = {} #hiera("mdular_com::htpasswd")
   ) inherits role_webserver {
-  
+
   # users, groups
   create_resources(user, $users)
   create_resources(group, $groups)
 
   # create host
-  web::nginx_host { 'play.mdular.com': 
+  web::nginx_host { 'play.mdular.com':
     www_root => "/var/www/play.mdular.com",
+    server_name => ['play.mdular.com', 'play.mdular.dev'],
     #htpasswd => true,
     #backend_port => 9001,
   }

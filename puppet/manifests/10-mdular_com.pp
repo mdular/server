@@ -12,11 +12,21 @@ class mdular_com (
   create_resources(group, $groups)
 
   # create host
+  # todo: create as resource from hiera
   web::nginx_host { 'mdular.com':
     www_root => "/var/www/mdular.com/public",
     # listen_options => "default_server",
+    server_name => ['mdular.com', 'mdular.dev'],
     #htpasswd => true,
     #backend_port => 9001,
+    location_cfg_append => {
+      fastcgi_connect_timeout => '3m',
+      fastcgi_read_timeout    => '3m',
+      fastcgi_send_timeout    => '3m',
+      fastcgi_param => {
+          'APP_ENV' => 'live'
+      }
+    }
   }
 
   # mysql db, user, grant
