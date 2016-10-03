@@ -1,39 +1,98 @@
-# TOOD: use node configuration and create environemnts as resources from hiera
+##
+# mdular.com environment
+# setup nginx hosts, databases
+#
+# @author Markus J Doetsch mdular.com
+##
 
-class mdular_com (
-    $users = {}, #hiera("mdular_com::users")
-    $groups = {}, #hiera("mdular_com::groups")
-    $mysql = {}, #hiera("mdular_com::mysql")
-    $htpasswd = {} #hiera("mdular_com::htpasswd")
-  ) inherits role_webserver {
+# define postgres_db($user, $pass) {
+#     postgresql::server::db { $title:
+#         user     => $user,
+#         password => postgresql_password($user, $pass),
+#     }
+#
+#     postgresql::server::extension { "ltree$title":
+#         extension => 'ltree',
+#         database => $title,
+#         ensure => present,
+#     }
+# }
 
-  # users, groups
-  create_resources(user, $users)
-  create_resources(group, $groups)
-
-  # create host
-  # todo: create as resource from hiera
-  web::nginx_host { 'mdular.com':
-    www_root => "/var/www/mdular.com/public",
-    # listen_options => "default_server",
-    server_name => ['mdular.com', 'mdular.dev'],
-    #htpasswd => true,
-    #backend_port => 9001,
-    location_cfg_append => {
-      fastcgi_connect_timeout => '3m',
-      fastcgi_read_timeout    => '3m',
-      fastcgi_send_timeout    => '3m',
-      fastcgi_param => {
-          'APP_ENV' => 'live'
-      }
+define webroot () {
+    file { "/var/www/${title}":
+      ensure => directory,
+      require => File["/var/www"],
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0755',
     }
-  }
-
-  # mysql db, user, grant
-  create_resources(mysql_database, $mysql[databases])
-  create_resources(mysql_user, $mysql[users])
-  create_resources(mysql_grant, $mysql[grants])
 }
 
-# include mdular_com in puppet run
+define nginx_host ($hostname, $enabled) {
+
+    # create nginx host config
+    file { "/etc/nginx/sites-available/$hostname":
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template("mdular_nginx/nginx-host-$title.erb"),
+        require => Package["nginx"],
+    }
+
+    if $enabled {
+        $ensure = 'link'
+    } else {
+        $ensure = 'absent'
+    }
+
+    file { "/etc/nginx/sites-enabled/$hostname":
+        ensure => $ensure,
+        target => "/etc/nginx/sites-available/$hostname",
+        notify => Service['nginx'],
+        require => File["/etc/nginx/sites-available/$hostname"]
+    }
+}
+
+# define elasticsearch_instance ($config) {
+#     elasticsearch::instance { "$title":
+#         config => $config,
+#     }
+# }
+
+class mdular_com(
+    $hosts = {},
+    $databases = {},
+    $search_instances = {},
+    ) inherits role_appnode {
+
+    # TODO: enable deep merging because hiera is kind of pointless without it
+
+    # notify {"$databases":}
+
+    # create_resources(webroot, $hosts)
+    # create_resources(nginx_host, $hosts)
+    # create_resources(postgres_db, $databases)
+    # create_resources(elasticsearch_instance, $search_instances)
+
+    # todo: initial composer install is too slow..
+    # exec { "composer install":
+    #     command => "php composer.phar install --no-progress --prefer-dist --no-interaction",
+    #     cwd => "/vagrant",
+    #     environment => ["COMPOSER_HOME=/tmp/composer"],
+    #     unless => "test -d vendor",
+    #     require => Exec['install composer'],
+    #     notify => Exec['reset dev'],
+    #     timeout => 600,
+    #     user => 'vagrant',
+    # }
+
+    #todo: default fixtureset via hiera
+    # exec { "reset dev":
+    #     command => "bin/robo migrate:reset dev demo",
+    #     cwd => "/vagrant",
+    #     refreshonly => true,
+    #     user => 'vagrant',
+    # }
+}
+
 class { 'mdular_com': }

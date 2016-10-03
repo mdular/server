@@ -1,0 +1,124 @@
+---
+permitRootLogin: 'yes'
+homepath: /home
+
+# TODO: component mdular_base should use these automatically
+mdular_base::users:
+mdular_base::groups:
+mdular_base::sshUsers:
+mdular_base::sudoers:
+mdular_base::mysql:
+  rootPassword: 'auy2Thaeghohng6ruu7T'
+
+mdular_com::users:
+    md:
+        ensure: present
+        home: /home/md
+        managehome: true
+        shell: /bin/bash
+        uid: 10001
+        #gid: 10001
+        groups: []
+        password: $6$MbhnT5vmun$JOTlrEWndMbJrKS9egNZJ1uGsz5TVMitDg8MwzRj2J/CcvajwJVoG0cYgGlIlSeuno6xyMNhe114C3lMyZiMI0
+            # Aeph4ahc1i
+            # mkpasswd -m sha-512 Aeph4ahc1i
+        #purge_ssh_keys: true
+    jb:
+        ensure: present
+        home: /home/jb
+        managehome: true
+        shell: /bin/bash
+        uid: 10002
+        #gid: 10001
+        groups: []
+        password: $6$kIwDEjtFH$ytjMKcVIB5zx7jvlHwt5ytT4rXThIB/Ou28KslKxCFC3hag5OIOJGoV55skQ4n9aNrZT04drSaZ.3xfcX2/lm0
+
+mdular_com::groups:
+#  ssh:
+#    ensure: present
+#    gid: 401
+
+mdular_com::sshUsers:
+  md:
+    type: 'ssh-rsa'
+    key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC7R6O4rT+FZf10+1egWpy2PBLqTdnP+P070JPsIbrfbdKRaXUfQZxQvLMyJrxg5Y73kj4jz2iBynCXbBofq/gmCfDRtJQI6vEDRdfEBw+dTHof3NVBzdzCTzHcLZd65pG779ssQiWicf9phYWfI6yNOZlVRo8ybYuzHn5tnzcNon+Utk58OZucPLHt0Q2+aRIQTm4N8Ife4gZnEUZsHtSVeYOFUmco+VVPPZ/KS24Ez8CUBdluDkLvhNALR0+KDPTaSiseskSnQr4WH4asH7wXjNtc7i0Mg+KDN2cp5kH9qAMXBKV1i5twebsk4xl4G6CEhukTy3bpxfMMVTSscBI3'
+  jb:
+      type: 'ssh-rsa'
+      key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDF9FN8UdvR9dv8MbEjTv6UREDLnwM5XWRWOMVMdKudVUEo7W21rc7yYO+Gg5DdzWrgUYkMJpaCQwA881Sm0ltc4V2iUT+PPKtEdV+L5m6G3QPsD8Xw1DbkdKKMTti54adTT3ILCQYp0cCgUvWp4Y48Bu3PX9cERy1n+yFWVhM51A/HdxCPS1GsLDbyetZNP5cHjBti8Mj1Jmdd3yLZB+4AQo2xhDl3ORDBJesPzbSFNU2X8kVG2na5nP6YIec26N7yNV3BE/1K5Go6NSEUhCgMcgmaPK3DrRNeq+8QPpiQPOdSoAvwGZsnz/KnUv3almfiumpcu40t9Y6PnxP7P/iP'
+
+mdular_com::sudoers:
+  md: {}
+
+
+mdular_com::mysql:
+  databases:
+    mdular_live:
+      ensure: present
+      charset: 'utf8'
+      collate: 'utf8_general_ci'
+  users:
+    mdular_live@localhost:
+      ensure: present
+      password_hash: '*A4E177507950D68B56F09868ADEB4C2E6F59AA43'
+      # ool0ku6jahsh8Sie2eig
+      # select password('ool0ku6jahsh8Sie2eig')
+      # why no work?? echo -n ool0ku6jahsh8Sie2eig | sha1sum | awk '{print toupper($1)}'
+      # add * in front
+  grants:
+    mdular_live@localhost/mdular_live.*:
+      ensure: present
+      options: ['GRANT']
+      privileges: ['ALL']
+      table: 'mdular_live.*'
+      user: 'mdular_live@localhost'
+
+mdular_com::htpasswd:
+  md: $apr1$IjrRQr3D$bukVuo/sbTaxPMyHYC/3E/
+    # htpasswd -mnp md 123
+
+
+dev_mdular_com::mysql:
+  databases:
+    mdular_dev:
+      ensure: present
+      charset: 'utf8'
+      collate: 'utf8_general_ci'
+  users:
+    mdular_dev@localhost:
+      ensure: present
+      password_hash: '*CABBBB87DD9A396AEFFC103CF64D709429256B0D'
+      # ahTaem2kohzaegh7aeGh
+      # select password('ahTaem2kohzaegh7aeGh')
+      # why no work?? echo -n ool0ku6jahsh8Sie2eig | sha1sum | awk '{print toupper($1)}'
+      # add * in front
+  grants:
+    mdular_dev@localhost/mdular_dev.*:
+      ensure: present
+      options: ['GRANT']
+      privileges: ['ALL']
+      table: 'mdular_dev.*'
+      user: 'mdular_dev@localhost'
+
+dev_mdular_com::htpasswd:
+  md: $apr1$IjrRQr3D$bukVuo/sbTaxPMyHYC/3E/
+    # htpasswd -mnp md 123
+
+
+wakeandcamp_de::mysql:
+    databases:
+        wakeandcamp_de:
+            ensure: absent
+            charset: 'utf8'
+            collate: 'utf8_general_ci'
+    users:
+        wakeandcamp_de@localhost:
+            ensure: absent
+            password_hash: '*EDAE7C15803E9EFD886369D639F723C79A7ACD75'
+            # xo8ashae8EiR4loo5aor
+    grants:
+        wakeandcamp_de@localhost/wakeandcamp_de.*:
+            ensure: absent
+            options: ['GRANT']
+            privileges: ['ALL']
+            table: 'wakeandcamp_de.*'
+            user: 'wakeandcamp_de@localhost'

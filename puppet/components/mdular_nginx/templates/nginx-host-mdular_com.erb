@@ -1,0 +1,62 @@
+#
+# Notice:
+# This file is managed by puppet.
+# Changes here will be overridden
+#
+
+server {
+  listen   80;
+  server_name <%= @hostname %>
+
+  access_log 	/var/log/nginx/<%= @hostname %>-access.log;
+  error_log		/var/log/nginx/<%= @hostname %>-error.log;
+
+#  sendfile off;
+  gzip on;
+  gzip_min_length 1000;
+  gzip_types text/plain text/xml application/xml text/css application/javascript application/x-javascript font/ttf;
+
+  client_max_body_size 20m;
+
+  root /var/www/<%= @hostname %>;
+
+  try_files $uri $uri/ @rewrite;
+  index index.html index.php;
+
+  set $my_https "";
+  if ($http_x_forwarded_protocol = https) {
+    set $my_https on;
+  }
+
+  location /nginx_status {
+    access_log   off;
+    allow 127.0.0.1;
+    deny all;
+  }
+
+  # Match          /public/...everything.../file.css etc
+  # or /booster/BOOSTERNAME/public/...everything.../file.css etc
+#  location ~* ^/(public|booster/\w+/public)/.+\.(ico|png|gif|jpg|jpeg|css|js|eot|ttf|woff|woff2|svg|pdf)$ {
+#    allow all;
+#    if ($uri ~* \.(eot|ttf|woff|woff2|svg)$) {
+#      add_header Access-Control-Allow-Origin *;
+#    }
+#  }
+
+  location @rewrite {
+    rewrite ^/(.*)$ /index.php?_url=/$1;
+  }
+
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index  index.php;
+    include        fastcgi_params;
+    fastcgi_split_path_info       ^(.+\.php)(/.+)$;
+    fastcgi_param PATH_INFO       $fastcgi_path_info;
+    fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param  APP_ENV live;
+    fastcgi_param  HTTPS $my_https;
+    fastcgi_intercept_errors on;
+  }
+}
