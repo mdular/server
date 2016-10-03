@@ -4,9 +4,6 @@
 [submodule "puppet/vendor/nginx"]
 	path = puppet/vendor/nginx
 	url = https://github.com/jfryman/puppet-nginx.git
-[submodule "puppet/vendor/apt"]
-	path = puppet/vendor/apt
-	url = https://github.com/puppetlabs/puppetlabs-apt.git
 [submodule "puppet/vendor/firewall"]
 	path = puppet/vendor/firewall
 	url = https://github.com/puppetlabs/puppetlabs-firewall.git
