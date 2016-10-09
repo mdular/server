@@ -7,3 +7,5 @@ class habitat inherits role_base {
       action  => accept
     }
 }
+
+class { 'habitat': }
