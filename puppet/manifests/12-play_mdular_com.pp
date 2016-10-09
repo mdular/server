@@ -14,7 +14,7 @@ class play_mdular_com (
   # create host
   web::nginx_host { 'play.mdular.com':
     www_root => "/var/www/play.mdular.com",
-    server_name => ['play.mdular.com', 'play.mdular.dev'],
+    server_name => ['play.mdular.com'],
     #htpasswd => true,
     #backend_port => 9001,
   }
