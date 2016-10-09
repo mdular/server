@@ -20,9 +20,9 @@ class mdular_com (
     #htpasswd => true,
     #backend_port => 9001,
     location_cfg_append => {
-      fastcgi_connect_timeout => '3m',
-      fastcgi_read_timeout    => '3m',
-      fastcgi_send_timeout    => '3m',
+    #   fastcgi_connect_timeout => '3m',
+    #   fastcgi_read_timeout    => '3m',
+    #   fastcgi_send_timeout    => '3m',
       fastcgi_param => {
           'APP_ENV' => 'live'
       }
